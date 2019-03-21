@@ -1,0 +1,5 @@
+# Ignore everything
+/*
+# Except dot file gitignore and markdown files
+!.gitignore
+!*.md
