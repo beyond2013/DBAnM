@@ -6,7 +6,7 @@
 
 ## Course contents:
 ---
-
+MySQL Server Installation and Configuration  
 ## Recommended Books:
 ---
 
