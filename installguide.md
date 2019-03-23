@@ -12,8 +12,12 @@
 2. Download MySQL Installer(mysql-installer-community-8.0.15.0.msi) from (https://dev.mysql.com/downloads/installer/) and execute it.
 3. Choose the Custom in Setup Type, and click Next.  
 ![](./fig/Step1.png)
-4. From the list of Available Products expand MySQL Servers, and select MySQL Server 8.0.15 - X64 use arrows to move selection to Products/Features to be Installe to be Installed. Repeat the same for the following :  
-From Applications select MySQL Workbench 8.0.15 - X64, and MySQL Shell 8.0.15 - X64   From Documentation Select MySQL Documentation 8.0.15 - X86 and Samples and Examples 8.0.15 - X86 your selection should match the snapshot below. Click Next.  
+4. From the list of **Available Products** expand **MySQL Servers**, and select **MySQL Server 8.0.15 - X64**  
+use arrows to move selection to **Products/Features to be Installed**. 
+Repeat the same for the following :  
+Expand **Applications** select **MySQL Workbench 8.0.15 - X64**, and **MySQL Shell 8.0.15 - X64**  
+Expand **Documentation** select **MySQL Documentation 8.0.15 - X86** and **Samples and Examples 8.0.15 - X86**  
+When your selection matches the snapshot below. Click Next.  
 ![](./fig/Step2.png)
 5. Click Execute button.  
 ![](./fig/Step3.png)
