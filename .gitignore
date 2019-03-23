@@ -3,4 +3,5 @@
 # Except dot file gitignore and markdown files
 !.gitignore
 !*.md
-!fig/*
+# Do not ignore fig directory
+!fig/
