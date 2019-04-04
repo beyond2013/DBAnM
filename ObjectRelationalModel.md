@@ -9,5 +9,23 @@ Note: Contents of this text have been taken from Chapter 9 **Object-Relational D
 
 - With the arrival of the third generation of database management systems, namely Object-Relational Database Management Systems (ORDBMSs) and Object-Oriented Database Management Systems (OODBMSs), the two disciplines have been combined to allow the concurrent modeling of both data and the processes acting upon the data.
 
+# Advance Database Applications
+- Existing RDBMSs have proven inadequate for applications whose needs are quite different from those of traditional business database applications. These applications include:  
+
++ computer-aided design (CAD);
++ computer-aided manufacturing (CAM);
++ computer-aided software engineering (CASE);
++ network management systems;
++ office information systems (OIS) and multimedia systems;
++ digital publishing;
++ geographic information systems (GIS);
++ interactive and dynamic Web sites.
+
+Other advanced database applications include:  
++ Scientific and medical applications, which may store complex data representing systems such as molecular models for synthetic chemical compounds and genetic material.  
++ Expert systems, which may store knowledge and rule bases for AI applications.  
+
+
+
 
 
