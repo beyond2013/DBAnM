@@ -1,4 +1,4 @@
-#User Account Management
+# User Account Management
 ---
 
 Note: Following contents have been taken from [MySQL online reference](https://dev.mysql.com/doc/refman/8.0/en/user-names.html).
@@ -17,7 +17,7 @@ Note: Following contents have been taken from [MySQL online reference](https://d
 
 - A user in MySQL is a combination of a username and host string.  
 - A host string can be an IP address, hostname, fully qualified domain name, or netmask.  
-- This means that even though they share a username, admin@192.168.2.10 is different from admin@’192.168.2.%’, and both users can have different passwords and permissions
+- This means that even though they share a username, admin@192.168.2.10 is different from admin@â€™192.168.2.%â€™, and both users can have different passwords and permissions
 
 ### Creating a User
 
