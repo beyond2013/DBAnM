@@ -44,6 +44,12 @@ Durability can be achieved by storing data redundantly on different backup devic
 ## Isolation:
 The concurrent execution of a set of transactions has the same effect as that of some serial execution of that set.
 
+## MySQL commands for writing transactions
+
+MySQL provides following three commands for programming transactions:
+1. start transaction
+2. commit, and
+3. rollback
 
 
 
