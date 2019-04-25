@@ -49,3 +49,24 @@ When your selection matches the snapshot below. Click Next.
 ![](./fig/Step16.png)
 19. After both configurations have completed click Cancel and upon confirmation select Yes.  
 ![](./fig/Step17.png)
+
+## Post Installation Configuration
+
+1. Control Panel
+2. System
+3. Advanced System Settings
+4. Environment Variables
+5. Under System Variables choose Path, and click Edit 
+6. New 
+7. C:\Program Files\MySQL\MySQL Server 8.0\bin
+8. Click OK
+
+
+
+
+
+
+
+
+
+
