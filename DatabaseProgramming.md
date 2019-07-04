@@ -88,11 +88,16 @@ END //
 ### INOUT example
 
 ```sql
-DELIMITER //
-CREATE PROCEDURE `proc_INOUT` (OUT var1 INT)
-BEGIN
-    SET var1 = var1 * 2;
-END //
+delimiter $
+create procedure gradePoint(IN marks_obt INT, OUT GP FLOAT(2,1)) 
+	begin 
+	IF marks_obt <= 60 and marks_obt > 50 then
+	set GP = 1.0;
+	elseif marks_obt <=70  and marks_obt > 60 then
+	set GP = 2.0;
+	end if;
+	end$
+Delimiter ;
 ```
 
 ## Variables
@@ -140,15 +145,3 @@ BEGIN
     SELECT CONCAT(str,paramstr), today FROM table2 WHERE b >=5; 
 END //
 ```
-
-delimiter $
-create procedure gradePoint(IN marks_obt INT, OUT GP FLOAT(2,1)) 
-	begin 
-	IF marks_obt <= 60 and marks_obt > 50 then
-	set GP = 1.0;
-	elseif marks_obt <=70  and marks_obt > 60 then
-	set GP = 2.0;
-	end if;
-	end$
-Delimiter ;
-
