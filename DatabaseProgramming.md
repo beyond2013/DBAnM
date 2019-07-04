@@ -51,37 +51,20 @@ Of course, you can define multiple parameters defined with different types.
 
 ### IN example
 
-```sql
- DELIMITER //
-CREATE PROCEDURE `proc_IN` (IN var1 INT)
-BEGIN
-    SELECT var1 + 2 AS result;
-END//
-```
-
-### OUT example
-```sql
-DELIMITER //
-CREATE PROCEDURE `proc_OUT` (OUT var1 VARCHAR(100))
-BEGIN
-    SET var1 = 'This is a test';
-END //
-
-DELIMITER ;
-
-CALL proc_OUT(@var1);
-```
-
-``
-
+First example of this document (country\_hos) is an example of using input parameters in stored procedures.
 ### OUT example
 
+Following stored procedure assumes a table student with a column rollno. It returns largest value in rollno column.
+
 ```sql
-DELIMITER //
-CREATE PROCEDURE `proc_OUT` (OUT var1 VARCHAR(100))
-BEGIN
-    SET var1 = 'This is a test';
-END //
+delimiter $
+create procedure max_id(OUT maxid INT)
+begin
+set maxid = (select max(rollno) from student);
+end$
+
+call max_id(@maxid);
+select @maxid;
 ```
 
 
@@ -98,6 +81,10 @@ create procedure gradePoint(IN marks_obt INT, OUT GP FLOAT(2,1))
 	end if;
 	end$
 Delimiter ;
+
+call gradePoint(45, @GP);
+select @GP
+;
 ```
 
 ## Variables
