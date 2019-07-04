@@ -49,7 +49,8 @@ Let's examine how you can define parameters within a stored procedure.
 
 Of course, you can define multiple parameters defined with different types.
 
-###IN example
+### IN example
+
 ```sql
  DELIMITER //
 CREATE PROCEDURE `proc_IN` (IN var1 INT)
@@ -58,7 +59,7 @@ BEGIN
 END//
 ```
 
-###OUT example
+### OUT example
 ```sql
 DELIMITER //
 CREATE PROCEDURE `proc_OUT` (OUT var1 VARCHAR(100))
@@ -73,7 +74,8 @@ CALL proc_OUT(@var1);
 
 ``
 
-###OUT example
+### OUT example
+
 ```sql
 DELIMITER //
 CREATE PROCEDURE `proc_OUT` (OUT var1 VARCHAR(100))
@@ -83,7 +85,8 @@ END //
 ```
 
 
-###INOUT example
+### INOUT example
+
 ```sql
 DELIMITER //
 CREATE PROCEDURE `proc_INOUT` (OUT var1 INT)
@@ -92,10 +95,10 @@ BEGIN
 END //
 ```
 
-##Variables
+## Variables
 
 
-##List all procedures defined within a database
+## List all procedures defined within a database
 
 ```sql
 show procedure status where db = 'database_name';
@@ -118,7 +121,8 @@ DECLARE today TIMESTAMP DEFAULT CURRENT_DATE;
 DECLARE v1, v2, v3 TINYINT;
 ```
 
-###Working with variables
+### Working with variables
+
 Once the variables have been declared, you can assign them values using the SET or SELECT command:
 
 ```sql
