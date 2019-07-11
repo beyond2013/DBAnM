@@ -20,9 +20,9 @@ MySQL has a special 'EXPLAIN' statement that you can use alongside select, delet
 explain select CountryCode , District, Population from city where name like 'Ka%';
 ```
 
-+----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------------+
+
 | id |select\_type | table | partitions | type |possible\_keys | key  | key\_len| ref  | rows | filtered | Extra       |
-+----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------------+
+-----|-------------|-------|------------|------|---------------|------|---------|------|------|----------|-------------|
 |  1 | SIMPLE      | city  | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 4187 |    11.11 | Using where |
-+----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------------+
+
 
