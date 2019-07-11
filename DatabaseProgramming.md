@@ -83,8 +83,7 @@ create procedure gradePoint(IN marks_obt INT, OUT GP FLOAT(2,1))
 Delimiter ;
 
 call gradePoint(45, @GP);
-select @GP
-;
+select @GP;
 ```
 
 ## Variables
