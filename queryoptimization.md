@@ -119,6 +119,9 @@ Instead of creating one wide table, consider splitting it apart in to logical st
 Always include fewer tables in your join statements. An SQL statement with poorly designed pattern that involves a lot of joins may not work well. A rule of thumb is to have utmost a dozen joins for each query.
 
 ## MySQL Query Caching
+
+**Note: MySQL 8.0 does not support query cache see [this blog]( https://mysqlserverteam.com/mysql-8-0-retiring-support-for-the-query-cache/) for details**
+
 If your website or application performs a lot of select queries (e.g. WordPress), you should take advantage of MySQL query caching feature. This will speed up performance when read operations are conducted.
 
 The technology works by caching the select query alongside the resulting data set. This makes the query run faster since they are fetched from memory if they are executed more than once. However, if your application updates the table frequently, this will invalidate any cached query and result set.
