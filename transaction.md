@@ -15,13 +15,13 @@ Credits: contents presented here are taken from the book **Database Systems An a
 
 ## Consistency
 Think of a database as playing both an active and a passive role in relation to the real world enterprise that it models.
-- In its passive role, it maintains the correspondence between the database state and the enterprise data. For example, the Student Registration System must accurately maintain the identity and number of students who have regisered for each course. 
-- In its active role, it enforces certian rules of the enterprise. For example the numbe of students registered for a course must not exceed the maximum enrollment for that course. 
+- In its passive role, it maintains the correspondence between the database state and the enterprise data. For example, the Student Registration System must accurately maintain the identity and number of students who have registered for each course. 
+- In its active role, it enforces certian rules of the enterprise. For example the number of students registered for a course must not exceed the maximum enrollment for that course. 
 - A transaction that attempts to register a student for a course that is already full must not complete successfully. Consistency is the term that is used to describe these issues and it has two aspects. 
-1. Internal consistency: It is often convenient to store the same information in different forms. For example, we might store the number of students registered for a course as well as a list whose entries name each student registered for the course. A database state in which the length of the list is not equal to the number of registerants is not allowed.
-2. Enterprise rules: Enterprise rules restrict the possible state of the enterprise. When such a rule exists, the possible state of the database are similarly restricted. The rule relatig the number of registrants and the maximum enrollment in a course is one example. 
+1. Internal consistency: It is often convenient to store the same information in different forms. For example, we might store the number of students registered for a course as well as a list whose entries name each student registered for the course. A database state in which the length of the list is not equal to the number of registrants is not allowed.
+2. Enterprise rules: Enterprise rules restrict the possible state of the enterprise. When such a rule exists, the possible state of the database are similarly restricted. The rule relating the number of registrants and the maximum enrollment in a course is one example. 
 
-The restrictions are referred to as integrity onstraints or consistency constraints.
+The restrictions are referred to as integrity constraints or consistency constraints.
 
 ## Atomicity
 The system must ensure that either the transaction runs to completion  or if it does not complete, it has no effect at all (as if it had never been started).
