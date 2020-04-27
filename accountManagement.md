@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-#User Account Management
----
-
-=======
 # User Account Management
 ---
 
@@ -37,4 +32,3 @@ After the user account has been created it can be confirmed by issuing following
 ```sql 
 SELECT user, host from user;
 ```
->>>>>>> 1e4af661e7bd843a7e9df68cd2bb99ca9f014999
