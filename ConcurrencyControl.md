@@ -1,4 +1,6 @@
-#Concurrency Control
+**Credits: contents presented here are taken from the book Database Systems An application oriented approach 2nd Edition by Michael Kifer, Arthur Bernstein, Philip M. Lewis**
+
+# Concurrency Control
 
 Suppose our university has over 10 thousand undergraduate students, and when the deadline for registration approaches, we might expect hundreds of students to be using the Student Registration System at the same time. The system must ensure that such a large number of concurrent users does not destroy the integrity of the database. Suppose, for example, that because of room size limitations, only 50 students are allowed to register for a particular course (that is one of the integrity constraints of the database), and suppose that 49 have already registered. If two additional students attempt to register concurrently, the system must ensure that no more than one of them succeeds. 
 One way to ensure the correctness of concurrent schedules is to run transactions serially, one at a time. Thus, when two students try to register for the last opening in a course, the transaction initiated by one of them will execute first, and that student will be registered. Once it has completed, the transaction initiated by the second will execute and that student will be told that the course is full. This type of execution is called serial, and the execution of each transaction is said to be isolated-the I in ACID. 
