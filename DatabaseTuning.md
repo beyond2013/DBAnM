@@ -226,11 +226,14 @@ There is no general rule on when to denormalize. Here is an incomplete list of c
 1. Normalization can lower the demand for storage space since it usually eliminates redundant data and null values. Tables and rows are smaller, reducing the amount of I/O that must be performed and allowing more rows to fit into the cache.
 
 2. Denormalization increases storage requirements since redundant data is added. When the degree of redundancy is low, however, normalization can also increase storage requirements. For instance, in the PERSON relation of the following figure 
-![PERSON RELATION](fig/dbtuning-008.png)	
+
+![PERSON RELATION](fig/personrel.png)
+	
 suppose that most people have just one phone number and one child. In this case, schema decomposition actually increases storage requirements (since SSN must be repeated in each table) without bringing tangible benefits. The same applies to the decomposition of HASACCOUNT in the following Figure
 
-![Decomposition of HASACCOUNT](fig/dbtuning-009.png)
-, which can increase the overhead for update transactions. The reason is that verification of the FD
+![DecompositionofHASACCOUNT](fig/hasaccount.png)
+
+which can increase the overhead for update transactions. The reason is that verification of the FD
 
 ```
 ClientId OfficeId -> AccountNumber 
