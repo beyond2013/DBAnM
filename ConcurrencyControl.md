@@ -9,11 +9,11 @@ The serial execution of a set of transactions has an important property. Recall 
 
 Unfortunately, serial execution is impractical. Databases are central to the operation of many applications and so must be accessed frequently. A system that requires that transactions be executed serially simply cannot keep up with the load. Furthermore, it is easy to see that, in many cases, serial execution is unnecessary. 
 
-For example, if transaction T1 accesses tables X and Y and if transaction T2 accesses tables U and V, the operations of T1 and T2 can be arbitrarily interleaved and the end result-including the information returned by the DBMS to the transactions and the final database state-will be identical to the serial execution of T1 followed by T2 and also identical to the serial execution of T2 followed by T1. Since serial execution is known to be correct, this interleaved schedule must be correct as well. 
+For example, if transaction T~1~ accesses tables X and Y and if transaction T~2~ accesses tables U and V, the operations of T~1~ and T~2~ can be arbitrarily interleaved and the end result-including the information returned by the DBMS to the transactions and the final database state-will be identical to the serial execution of T~1~ followed by T~2~ and also identical to the serial execution of T~2~ followed by T~1~. Since serial execution is known to be correct, this interleaved schedule must be correct as well. 
 
 The interleaved execution of a set of transactions is potentially far more efficient than serial execution of that set. Transaction execution requires the services of multiple system resources-primarily CPU and I/O devices-but a transaction frequently utilizes only one of these resources at a time. With concurrent execution of several transactions, we can potentially utilize a number of these resources simultaneously and hence improve system throughput. For example, while a CPU is doing some computation for one transaction, an I/O device might be providing I/O service for another. 
 
-Unfortunately, certain interleaved schedules can cause consistent transactions to behave incorrectly, returning the wrong result to the application and producing inconsistent database states. For that reason, we cannot allow arbitrary interleav­ings. The first question is how to decide which interleavings are good and which are bad. The next question is how to implement an algorithm that permits the good in­terleavings and prohibits the bad. We call such an algorithm a concurrency control. It schedules database operations requested by concurrently executing transactions in a way that ensures that each transaction is isolated from every other transaction. 
+Unfortunately, certain interleaved schedules can cause consistent transactions to behave incorrectly, returning the wrong result to the application and producing inconsistent database states. For that reason, we cannot allow arbitrary interleavings. The first question is how to decide which interleavings are good and which are bad. The next question is how to implement an algorithm that permits the good interleavings and prohibits the bad. We call such an algorithm a concurrency control. It schedules database operations requested by concurrently executing transactions in a way that ensures that each transaction is isolated from every other transaction. 
 
 In most commercial transaction processing systems, concurrency control is done automatically and is invisible to the application programmer who designs each transaction as if it will execute in a non concurrent environment. Nevertheless, it is important to understand the concepts underlying the operation of concurrency controls because 
 
@@ -28,7 +28,7 @@ The concurrency controls we are interested in will work in any application. We d
 
 For example, a transaction might read the value of a variable in the database. If the concurrency control knows that the variable represents a bank account balance and that the transaction will request the read as a first step of a deposit operation, it might be able to use that information in choosing an acceptable interleaving. However, we assume that this information is not available to the concurrency control. 
 
-If we cannot use application-specific information, how do we decide which in­terleavings are correct? The answer lies in our basic assumption that each transaction is consistent and that therefore serial schedules must be correct. From this it follows that any interleaved schedule that has the same effect as that of a serial schedule must also be correct, and this is the correctness criterion we use. We will refine the notion of "has the same effect as that of a serial schedule" later, but you should understand that this is a conservative notion of correctness. As we shall see, for many applications, there will be executions that are correct even though they do not "have the same effect as that of a serial execution." 
+If we cannot use application-specific information, how do we decide which interleavings are correct? The answer lies in our basic assumption that each transaction is consistent and that therefore serial schedules must be correct. From this it follows that any interleaved schedule that has the same effect as that of a serial schedule must also be correct, and this is the correctness criterion we use. We will refine the notion of "has the same effect as that of a serial schedule" later, but you should understand that this is a conservative notion of correctness. As we shall see, for many applications, there will be executions that are correct even though they do not "have the same effect as that of a serial execution." 
 
 We assume that a transaction is a program whose data space includes the database and its local variables. While the local variables are accessible only by that transaction, the database is global and accessible by all transactions. The transaction uses different mechanisms to access the two parts of its data space. The local variables are directly accessible by the transaction (i.e., in its virtual memory), but the database is accessible only through calls to procedures provided by the database manager. 
 
@@ -36,7 +36,7 @@ For example, at a very low level of implementation detail, the transaction asks 
 
 A transaction, then, is a program in which computations made with the local variables are interspersed with requests for access to the database made to the database manager. Since the computation (on local variables) is invisible to the database manager, the manager's view of the execution of a transaction is a sequence of read and write requests, which we call a transaction schedule.
 
- If pi,j is the jth request made by transaction Ti, then pi,1,pi,2, · · · ,pi,n  is the transaction schedule of Ti, which consists of n requests to the database manager. 
+ If p~i,j~ is the jth request made by transaction T~i~, then p~i,1~,p~i,2~, · · · ,p~i,n~  is the transaction schedule of T~i~, which consists of n requests to the database manager. 
 
 Since transactions execute concurrently, the database manager must deal with a merge of transaction schedules, which we refer to simply as a schedule. The database manager has the responsibility of servicing each arriving request. However, doing so in the order of arrival might lead to incorrect behavior. Hence, when a request arrives, a decision must be made as to whether to service it immediately. This decision is made by the manager's concurrency control. If the concurrency control decides that immediately servicing a request might lead to an incorrect schedule, it can delay servicing to a later time or it can abort the requesting transaction altogether. 
 
@@ -51,18 +51,18 @@ We assume that the execution of each database operation is atomic and isolated w
 ## Equivalence of schedules 
 Operation semantics is used to determine allowable schedules. To explain how, we must first explain what it means for two schedules to be equivalent. Recall that a schedule is correct if it is equivalent to a serial schedule. So what does it mean for two schedules to be equivalent? 
 
-We say that two database operations, p1 and p2, commute if, for all possible initial database states, 
+We say that two database operations, p~1~ and p~2~, commute if, for all possible initial database states, 
 
-p1 returns the same value when executed in either the sequence p1, p2 or p2, p1
-p2 returns the same value when executed in either the sequence p1, p2 or p2, p1
+p~1~ returns the same value when executed in either the sequence p~1~, p~2~ or p~2~, p~1~
+p~2~ returns the same value when executed in either the sequence p~1~, p~2~ or p~2~, p~1~
 The database state produced by both sequences is the same
-Note that commutativity is symmetric: if p1 commutes with p2, then p2 commutes with p1. 
+Note that commutativity is symmetric: if p~1~ commutes with p~2~, then p~2~ commutes with p~1~. 
 
-Suppose that p1 and p2 are requests made by different transactions and are successive operations in a schedule, S1. Then S1 has the form S1, 1, p1, p2, S1,2 
+Suppose that p~1~ and p~2~ are requests made by different transactions and are successive operations in a schedule, S~1~. Then S~1~ has the form S~1,1~, p~1~, p~2~, S~1,2~ 
 
-where S1, 1 is a prefix of S1, and S1,2 is a suffix of S1. Suppose the two operations p1 and p2 commute. Then in schedule S2, S1, 1, p2, p1, S1,2 
+where S~1,1~ is a prefix of S~1~, and S~1,2~ is a suffix of S~1~. Suppose the two operations p~1~ and p~2~ commute. Then in schedule $S~2~, S~1,1~, p~2~, p~1~, S~1,2~ $
 
-all transactions perform the same computations as in schedule S1 since the values returned to each transaction by read requests are the same in both schedules. Furthermore, both schedules leave the database in the same final state. Hence, we say that schedules S1 and S2 are equivalent. 
+all transactions perform the same computations as in schedule S~1~ since the values returned to each transaction by read requests are the same in both schedules. Furthermore, both schedules leave the database in the same final state. Hence, we say that schedules S~1~ and S~2~ are equivalent. 
 
 Operations that do not commute are said to conflict. Most important, two operations on different data items always commute. Commutativity is also possible between operations on the same item. For example, two read operations on the same item commute. However, a read and a write on the same item conflict because, although the final state of the item is the same independent of the order of execution, the value returned to the reader depends on the order of the operations. Similarly, two write operations on the same item conflict since the final state of the item depends on the order in which the writes occur. 
 
@@ -70,24 +70,24 @@ In any schedule, successive operations that commute with each other and belong t
 
 The design of most concurrency controls is based on the following theorem, which is an alternate way to demonstrate the equivalence of two schedules: 
 
-Theorem (schedule equivalence).
+### Theorem (schedule equivalence).
 Two schedules of the same set of operations are equivalent if and only if conflicting operations are ordered in the same way in both schedules. 
 
 Note that we can prove this theorem if we can demonstrate that 
 
-A schedule, S2, can be derived from a schedule, S1, by interchanging commuting operations if and only if conflicting operations are ordered in the same way in both schedules. 
+A schedule, S~2~, can be derived from a schedule, S~1~, by interchanging commuting operations if and only if conflicting operations are ordered in the same way in both schedules. 
 
 since we know that two schedules are equivalent if and only if one can be derived from the other by interchanging commuting operations. 
 
-The "only if" part of the theorem follows from the observation that the order of conflicting operations is preserved by the interchange procedure. Thus if conflicting operations were ordered differently in both schedules, S2 could not have been obtained from S1 using the interchange procedure. 
+The "only if" part of the theorem follows from the observation that the order of conflicting operations is preserved by the interchange procedure. Thus if conflicting operations were ordered differently in both schedules, S~2~ could not have been obtained from S~1~ using the interchange procedure. 
 
-The "if" part is a little more difficult. It can be demonstrated by showing that any schedule, S2 (of the same set of operations as in S1), in which conflicting operations are ordered the same way as in S1, can be generated from S1 using the interchange procedure. To show this, consider the schedule S1 : ...., pi,pi+1, pi+2, ...., pi+r, ...
+The "if" part is a little more difficult. It can be demonstrated by showing that any schedule, S~2~ (of the same set of operations as in S~1~), in which conflicting operations are ordered the same way as in S~1~, can be generated from S~1~ using the interchange procedure. To show this, consider the schedule S~1~ : ...., p~i~,p~i+1~, p~i+2~, ...., p~i+r~, ...
 
-Suppose that S2 is a schedule of the same set of operations, and in S2 conflicting operations are ordered the same way as in S1. Furthermore, suppose that there exists an i such that for all j satisfying 1≤j≤r−1, pi and pi+j are ordered in the same way in both S1 and S2, but that pi and pi+j are ordered differently. Thus, pi+r is the first operation following pi in S1 that is ordered differently in S2, and so pi+r precedes pi in S2. Operations pi and pi+r must commute since conflicting operations are ordered in the same way in S1 and S2. 
+Suppose that S~2~ is a schedule of the same set of operations, and in S~2~ conflicting operations are ordered the same way as in S~1~. Furthermore, suppose that there exists an i such that for all j satisfying $1≤j≤r−1$, p~i~ and p~i+j~ are ordered in the same way in both S~1~ and S~2~, but that p~i~ and p~i+j~ are ordered differently. Thus, p~i+r~ is the first operation following p~i~ in S~1~ that is ordered differently in S~2~, and so p~i+r~ precedes p~i~ in S~2~. Operations p~i and p~i+r~ must commute since conflicting operations are ordered in the same way in S~1~ and S~2~. 
 
-Assume now that there is some k satisfying 1≤k≤r−1 such that pi+r does not commute with pi+k· Then, in S2, the operations must be ordered ..., pi+k, ..., pi+r, ...., pi, ... since conflicting operations are ordered in the same way in both schedules. But this contradicts the assumption that Pi+r is the first operation following Pi in S1 that is ordered differently in S2. 
+Assume now that there is some k satisfying $1≤k≤r−1$ such that p~i+r~ does not commute with p~i+k~· Then, in S~2~, the operations must be ordered ..., p~i+k~, ..., p~i+r~, ...., p~i~, ... since conflicting operations are ordered in the same way in both schedules. But this contradicts the assumption that P~i+r~ is the first operation following P~i~ in S~1~ that is ordered differently in S~2~. 
 
-For this reason, the assumption that there exists a k satisfying 1≤k≤r−1 such that pi+r does not commute with pi+k, is false. Therefore,  pi+r commutes with all of the operations in pi, ..., pi+r-1,  and a series of interchanges of adjacent operations can be used to create a schedule equivalent to S1 that differs from S1 only in that pi+r precedes, rather than follows, pi (as it does in S2). The interchange procedure can be used repeatedly to reorder the operations that are ordered differently in S1 and S2 and thus to transform S1 into S2. 
+For this reason, the assumption that there exists a k satisfying $1≤k≤r−1$ such that p~i+r~ does not commute with p~i+k~, is false. Therefore,  p~i+r~ commutes with all of the operations in p~i~, ..., p~i+r-1~,  and a series of interchanges of adjacent operations can be used to create a schedule equivalent to S~1~ that differs from S~1~ only in that p~i+r~ precedes, rather than follows, p~i~ (as it does in S~2~). The interchange procedure can be used repeatedly to reorder the operations that are ordered differently in S~1~ and S~2~ and thus to transform S~1~ into S~2~. 
 
 ## Serializability 
 We have shown that, if conflicting operations are ordered in the same way in two schedules, they are equivalent. Using this rule, we can specify interleaved schedules that are equivalent to serial schedules, and it is these schedules that the concurrency control is designed to permit. We refer to such schedules as serializable. 
@@ -100,4 +100,4 @@ Since a serializable schedule is equivalent to a serial schedule and since we as
 
 Serializable schedules are correct for any application. However, for a particular application, serializability might be too strong a condition (some non serializable schedules of that application's transactions might be correct) and can lead to an unnecessary performance penalty. Hence, concurrency controls generally implement a variety of isolation levels, the strongest of which produces serializable schedules. The application designer can choose a level appropriate for the particular application. 
 
-[link to related video lecture](https://www.youtube.com/watch?time_continue=7&v=SwToXbclDdI)
+[Link to related video lecture](https://www.youtube.com/watch?time_continue=7&v=SwToXbclDdI)
