@@ -5,3 +5,4 @@
 !*.md
 # Do not ignore fig directory
 !fig/
+zoom-session/

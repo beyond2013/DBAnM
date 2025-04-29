@@ -84,7 +84,7 @@ WHERE P.Name = :name
 
 Since the primary key of PROFESSOR is Id, we can expect that the DBMS has created a clustered index on that attribute. That index is no help for this query because we need a quick way to find all professors with a particular name. One possibility is to explicitly create an unclustered index on Name. Assuming that only a few professors have the same name, this index should speed things up. 
 
-But suppose this is not the case; many professors have the same name, Then  a better solution is to make the index on Name clustered and the index on Id unclustered. As a result, rows with the same name will be grouped together and can be retrieved in a single (or a few) 1/O operations. The index could be a B+ tree or a hash (since the condition on Name involves equality).
+But suppose this is not the case; many professors have the same name, Then  a better solution is to make the index on Name clustered and the index on Id unclustered. As a result, rows with the same name will be grouped together and can be retrieved in a single (or a few) I/O operations. The index could be a B+ tree or a hash (since the condition on Name involves equality).
 
 The lesson here is that since a table can have only one clustered index, it is pointless to waste it on an attribute that cannot take advantage of clustering. DBMSs generally create a clustered index on the primary key, but you should not be intimidated by this. An unclustered index on the primary-key attribute is sufficient to guarantee the key’s uniqueness, and since at most one row can have a particular key value, clustering cannot be justified as a means of grouping rows with the same value of the attribute. So, if we are unlikely to want to order rows based on the primary key (as is the case with PROFESSOR), there is no reason to use a clustered index for this purpose.
 
@@ -266,7 +266,7 @@ The pair (Region, TotalSales) is referred to as a repeating group. Unfortunately
 ```sql
 CREATE TABLE SALES (
     Id INTEGER,
-		RegioniSales DECIMAL,
+		Region1Sales DECIMAL,
 		Region2Sales DECIMAL,
 		Region3Sales DECIMAL )
 ```
@@ -274,13 +274,13 @@ CREATE TABLE SALES (
 This schema has the limitation that only a fixed number of sales regions can be accommodated, but if it is generally the case that all of the information about a salesperson is retrieved at the same time, it might yield performance benefits.
 
 ### Partitioning
-The I/O cost of accessing a very large table can be reduced by explicitly splitting the table (in the schema) into partitions. One reason for doing this is to separate frequently accessed data in the table from data that is rarely referenced. By packing data that is frequently accessed into fewer pages, the number of I/O operations can be reduced and it is less likely that pages in the cache contain data that is not being referenced. A second reason is to make it possible to access different parts of the table concurrently, and we discuss this in section Managing Pysical Resources . With horizontal partitioning, all partitions have the same set of columns and each contains a subset of the rows. The partitioning of the rows is based on a natural criterion that populates the partitions with disjoint subsets. 
+The I/O cost of accessing a very large table can be reduced by explicitly splitting the table (in the schema) into partitions. One reason for doing this is to separate frequently accessed data in the table from data that is rarely referenced. By packing data that is frequently accessed into fewer pages, the number of I/O operations can be reduced and it is less likely that pages in the cache contain data that is not being referenced. A second reason is to make it possible to access different parts of the table concurrently, and we discuss this in section Managing Physical Resources . With horizontal partitioning, all partitions have the same set of columns and each contains a subset of the rows. The partitioning of the rows is based on a natural criterion that populates the partitions with disjoint subsets. 
 
 For example, the table STUDENT might be partitioned into two partitions. Rows describing inactive students, those who have graduated, might be in a partition named ALUMNI. Rows describing active students, the current undergraduates, might be in a partition called CURRENT_STUDENTS. A page of CURRENT_STUDENTS in the cache is more likely to be referenced again than a page of ALUMNI since most references are to active students and a page of CURRENT_STUDENTS contains only those students. This reduces the number of I/O operations. Similarly, the cost of a scan to retrieve undergraduate information is greatly reduced.
 
 With vertical partitioning, subsets of the columns of a table form the partitions. This can be useful when a table has many columns, and hence long rows, and some of the columns are infrequently referenced. Once again, without partitioning, performance is degraded by the need to transfer inactive data from the disk when active data is referenced. By storing the infrequently accessed columns in a separate partition, this problem can be alleviated. Oracle, for example, effectively separates infrequently accessed columns without requiring explicit partitioning. These columns are designated in the CREATE TABLE statement of a table that has an integrated, clustered index. In this case the infrequently accessed columns are not stored in the leaf level of the index but instead are stored in overflow pages linked to leaf pages. Scans involving only frequently accessed columns can skip the overflow pages.
 
-An astute reader must have noticed that vertical partitioning is conceptually the same as schema decomposition. In particular, partitions must form a lossless decomposition of the original relation, which can be ensured by, for example, including a key of the relation in all partitions. However, partitioning is typically driven not by the need to normalize the schema but by other considerations. For instance, if in a STUDENT table the attributes Address and Phone are accessed infrequently, they (and the student Id) might be separated into a different partition even though the STUDENT table is already in BCNE. With this secondary information split off, the main partition of the STUDENT table becomes smaller and thus queries involving this table run faster.
+An astute reader must have noticed that vertical partitioning is conceptually the same as schema decomposition. In particular, partitions must form a lossless decomposition of the original relation, which can be ensured by, for example, including a key of the relation in all partitions. However, partitioning is typically driven not by the need to normalize the schema but by other considerations. For instance, if in a STUDENT table the attributes Address and Phone are accessed infrequently, they (and the student Id) might be separated into a different partition even though the STUDENT table is already in BCNF. With this secondary information split off, the main partition of the STUDENT table becomes smaller and thus queries involving this table run faster.
 
 Partitioning involves a trade-off, and in this case the price that must be paid is the additional complexity of managing and accessing multiple tables. Hence, it should be used only when the performance benefits are clear.
 
@@ -379,9 +379,9 @@ DBMS vendors usually provide a variety of tools to help with tuning. The use of 
 
 ```sql
 EXPLAIN PLAN SET queryno=123 FOR
-        SELECT P.Name
-				FROM PROFESSOR P, TEACHING T 
-				WHERE _P.Id = T.ProfId AND T.Semester = 'F1994' AND T.Semester = 'CS'
+SELECT P.Name
+FROM PROFESSOR P, TEACHING T 
+WHERE _P.Id = T.ProfId AND T.Semester = 'F1994' AND T.Semester = 'CS'
 ```
 which causes the DBMS to generate a query execution plan and store it as a set of tuples in a relation called PLAN_TABLE. queryno is one attribute of that table. Some DBMSs use a different attribute name, for example, id. The plan can then be retrieved by querying PLAN_TABLE as follows:
 
@@ -404,7 +404,7 @@ Beyond distributing files across disks, the next point to note is that reading a
 
 In addition to influencing the way I/O devices are employed in an application, the programmer can influence the way CPUs are used. Generally, a single process (or thread) is assigned to execute the query plan for a particular SQL statement. Processes are sequential—they do one thing at a time. Either they require the services of a CU to execute some code or they request an I/O transfer and wait until the operation completes. Hence, they make use of one physical device at a time. As a result, 1 an OLAP environment with only a few concurrent users, throughput may suffer because resource utilization is low. In an OLTP environment with many concurrer| users, resource utilization will be high, but the response time possible when only 4 single process is assigned to execute a query plan can be unacceptable.
 
-The response time of a query can often be improved using parallel query processing in which multiple concurrent processes are assigned to execute different components of the query plan. Improvement is likely when the system has multiple CPUs (so the processes can execute simultaneously), the query plan involves table scans, the query accesses very large tables (so considerable 1/O is required), and the data is spread across multiple disks (so the processes can be using the disks simultaneously). DBMSs provide mechanisms, called hints (discussed on page 454), that the application programmer can use to request parallel query processing.
+The response time of a query can often be improved using parallel query processing in which multiple concurrent processes are assigned to execute different components of the query plan. Improvement is likely when the system has multiple CPUs (so the processes can execute simultaneously), the query plan involves table scans, the query accesses very large tables (so considerable I/O is required), and the data is spread across multiple disks (so the processes can be using the disks simultaneously). DBMSs provide mechanisms, called hints (discussed on page 454), that the application programmer can use to request parallel query processing.
 
 ## Influencing the Optimizer
 
@@ -427,3 +427,11 @@ Maintaining statistics is time consuming, and hence statistics are not normally 
 Unfortunately, it might be difficult for the optimizer to detect that a condition is selective. For example, although a condition such as T.Model = 'Rolls Royce' on a table containing the inventory of Slippery Joe's Used Cars might be very selective, the optimizer might have no way of knowing that. Even if a histogram were maintained on the attributes of the table, the optimizer would be stymied if 'Rolls Royce' were replaced by a host variable :model. Although the optimizer might not have enough information, the programmer probably does. He can list the tables in the FROM clause in the desired join order and provide a hint to the effect that the optimizer should use that order in the query plan.
 
 Hints can cover many issues. For example, different databases allow you to specify the join methodology to use (hash, sort-merge, etc.), the index to use, whether parallel query execution should be considered, and whether to optimize a query plan so that it retrieves the first row of a result set quickly (for fast response time for an interactive query) or whether it should minimize the time for retrieving the entire result set (for batch queries).
+
+## Useful online references to understand relevant subtopics 
+
+[What is the difference between hashing and indexing?](https://stackoverflow.com/questions/13470688/what-is-the-difference-between-hashing-and-indexing#13472833)
+
+[Comparison of B-Tree and Hash Indexes](https://dev.mysql.com/doc/refman/8.0/en/index-btree-hash.html)
+
+[Clustered vs Non-clustered Index - Key Differences with Example](https://www.guru99.com/clustered-vs-non-clustered-index.html)
