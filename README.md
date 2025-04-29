@@ -6,17 +6,55 @@
 
 ## Course contents:
 
-- Introduction to advance data models such as object relational, object oriented.
-- File organizations concepts
-- Transactional processing and Concurrency control techniques,
-- Recovery techniques
-- Query processing and optimization
-- Database Programming,
-- Integrity and security
+- Overview and Advanced Data Models
+  - Basic relational models revisited 
+  - Object-Relational Databases (PostgreSQL examples)
+  - Object-Oriented Databases (OO principles + examples like db4o or Oracle OODB features)
+- File Organization Concepts
+  - Heap, Sorted, and Hashed files
+  - Indexing (B+ Trees, Hash Indexes)
+  - Cost considerations in access
+- Transaction Processing and Concurrency Control
+  - ACID properties
+  - Serializability
+  - Lock-based protocols, Timestamps, Deadlocks
+- Recovery Techniques
+  - Log-based recovery
+  - Checkpoints
+  - Shadow paging
+- Query Processing and Optimization
+  - Parsing, translation, and optimization
+  - Heuristics and cost-based optimization
+  - Join algorithms and access paths
+- Database Programming
+  - Embedded SQL (e.g., SQL with C/C++)
+  - Stored procedures and triggers
+  - Using APIs (like JDBC/ODBC or Python’s DB-API)
+- Data Integrity and Security
+  - Constraints (PK, FK, domain)
+  - Authorization and authentication
+  - SQL injection and mitigation
+  - Encryption techniques
 - Database Administration
-- Physical database design and tuning,
-- Distributed database systems
-- Emerging research trends in database systems.
+  - Roles and responsibilities
+  - User management
+  - Backup and recovery planning
+  - Monitoring and auditing
+- Physical Database Design and Tuning
+  - Storage planning
+  - Indexing strategies
+  - Query tuning with EXPLAIN plans
+  - Partitioning, denormalization for performance
+- Distributed Database Systems
+  - Fragmentation and replication
+  - Distributed transactions
+  - CAP theorem and eventual consistency
+- Emerging Trends  
+  - NoSQL databases   
+  - NewSQL  
+  - Cloud-based DBMS (like AWS RDS, Google Spanner)  
+  - In-memory databases  
+
 
 ## Labs:
 MySQL Server Installation and Configuration 
