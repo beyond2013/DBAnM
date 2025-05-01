@@ -4,9 +4,15 @@
 - Credit Hours: 03
 - Pre-requisite: Database Systems
 
+## Acknowledgment:
+
+Parts of this content have been generated or refined using ChatGPT (by OpenAI) to support clarity, structure, and accessibility. All material has been reviewed and curated by the author.
+
+Learners are encouraged to actively engage with the content—verify facts, explore alternative perspectives, and deepen their understanding through further research. Curiosity and critical thinking are essential companions to any tool or source.m
+
 ## Course contents:
 
-- Overview and Advanced Data Models
+- [Overview and Advanced Data Models](markdown/datamodels.md)
   - Basic relational models revisited 
   - Object-Relational Databases (PostgreSQL examples)
   - Object-Oriented Databases (OO principles + examples like db4o or Oracle OODB features)
