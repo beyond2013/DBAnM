@@ -6,3 +6,4 @@
 # Do not ignore fig directory
 !fig/
 zoom-session/
+!markdown/
