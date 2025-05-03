@@ -16,7 +16,7 @@ Learners are encouraged to actively engage with the content—verify facts, expl
   - Basic relational models revisited 
   - Object-Relational Databases 
   - Object-Oriented Databases 
-- File Organization Concepts
+- [File Organization Concepts](markdown/fileorganization.md)
   - Heap, Sorted, and Hashed files
   - Indexing (B+ Trees, Hash Indexes)
   - Cost considerations in access
