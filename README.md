@@ -20,7 +20,7 @@ Learners are encouraged to actively engage with the content—verify facts, expl
   - Heap, Sorted, and Hashed files
   - Indexing (B+ Trees, Hash Indexes)
   - Cost considerations in access
-- Transaction Processing and Concurrency Control
+- [Transaction Processing and Concurrency Control](markdown/transactionconcurrency.md)
   - ACID properties
   - Serializability
   - Lock-based protocols, Timestamps, Deadlocks
