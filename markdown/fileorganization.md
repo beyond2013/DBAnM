@@ -1,6 +1,10 @@
 # File Organization Concepts
 
 
+## Acknowledgment:
+
+Parts of this content have been generated or refined using ChatGPT (by OpenAI) to support clarity, structure, and accessibility. All material has been reviewed and curated by the author.
+
 ## Introduction
 
 File organization refers to the way data is physically stored and accessed on storage devices. It determines how records are arranged within files, which affects how efficiently data can be retrieved, updated, or deleted. As a database administrator, choosing the right file organization method is essential for ensuring high performance, scalability, and optimal use of storage.
