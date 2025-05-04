@@ -99,10 +99,6 @@ A **deadlock** occurs when two or more transactions wait indefinitely for each o
 * **Recovery**: After detection, one or more transactions are rolled back to break the cycle.
 
 
-Absolutely. Here's an extended **section at the end of the lecture** that addresses **which aspects are handled by the DBMS and which fall under the DBA's responsibilities**:
-
----
-
 ## Division of Responsibilities: DBMS vs. DBA
 
 Modern relational database management systems (RDBMSs) such as MySQL, PostgreSQL, Oracle, and SQL Server come equipped with built-in mechanisms for transaction processing and concurrency control. However, the **Database Administrator (DBA)** plays a crucial role in configuring, monitoring, and tuning these mechanisms to ensure optimal performance and reliability.
@@ -179,9 +175,71 @@ Modern relational database management systems (RDBMSs) such as MySQL, PostgreSQL
 
 🔸 = Shared responsibility
 
+
+## Real-World Example: Online Fund Transfer
+
+### Scenario
+
+Ali logs into his bank’s mobile app to **transfer Rs. 10,000** from his **Savings Account** to his **JazzCash wallet**. At the same time, the bank’s nightly batch process is calculating interest for all savings accounts.
+
 ---
 
-Let me know if you'd like this added to the Word document or turned into a separate handout.
+### Transactions Involved
+
+1. **T1 (Ali’s Transfer)**
+
+   * Read Savings Account balance
+   * Subtract Rs. 10,000
+   * Update balance
+   * Credit JazzCash wallet
+   * Commit transaction
+
+2. **T2 (Interest Calculation Job)**
+
+   * Read all Savings Account balances
+   * Compute interest (e.g., 5%)
+   * Update balances
+   * Commit transaction
+
+---
+
+### What Could Go Wrong Without Concurrency Control
+
+If T1 and T2 execute concurrently without proper **isolation**, both might read the **same original balance** (e.g., Rs. 100,000) and perform their updates independently. This can result in:
+
+* One transaction’s update **overwriting** the other’s
+* **Incorrect computation of the final balance**
+
+#### Example of Lost Update
+
+1. T1 reads balance = Rs. 100,000
+2. T2 reads balance = Rs. 100,000
+3. T1 subtracts Rs. 10,000 → writes Rs. 90,000
+4. T2 adds Rs. 5,000 interest → writes Rs. 105,000 ← ❌ overwrites T1’s deduction
+
+🚨 **Final balance = Rs. 105,000**
+Ali’s transfer has been **lost** due to a concurrency issue — not because the deduction itself was incorrect, but because **the final computation of balance was wrong**.
+
+---
+
+### How the DBMS Handles It
+
+* **Lock-based concurrency**: T1 acquires a lock on Ali’s balance; T2 must wait.
+* **Timestamp-based concurrency**: T2 may be delayed or aborted to maintain serializability.
+* **ACID properties ensure**:
+
+  * **Atomicity**: Either the transfer happens completely, or not at all
+  * **Consistency**: Final balances reflect both actions correctly
+  * **Isolation**: No transaction sees partial effects of others
+  * **Durability**: Updates persist even after a crash
+
+---
+
+### Final Outcome with Proper Handling
+
+✅ Ali sees Rs. 95,000 in his account after the transfer and interest calculations — an **accurate, consistent result**, thanks to proper transaction processing and concurrency control.
+
+---
 
 
 ## Conclusion
