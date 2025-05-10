@@ -1,5 +1,13 @@
 # Data Models
 
+
+## Acknowledgment:
+
+- Parts of this content have been generated or refined using ChatGPT (by OpenAI) to support clarity, structure, and accessibility.
+- All material has been reviewed and curated by the author.
+- Learners are encouraged to actively engage with the content—verify facts, explore alternative perspectives, and deepen their understanding through further research.
+- Curiosity and critical thinking are essential companions to any tool or source.
+
 ## What is the relevance of various types of data models to this course?
 
 Understanding various types of data models is foundational to Database Administration and Management.
