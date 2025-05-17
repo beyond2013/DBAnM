@@ -155,5 +155,3 @@ Encapsulation   | not supported	        | Supported             | Partial suppor
 Query Language	| SQL	                | OQL/Object methods	| Extended SQL
 Use Case	    | General-purpose	    | Complex data systems	| Enterprise systems
 
-
-### [Link to Lab Manual](./lab1.md)

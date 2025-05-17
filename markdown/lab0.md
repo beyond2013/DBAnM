@@ -1,4 +1,4 @@
-# Setup Windows Sub System for Linux MySQL and Postgres
+# Setup Windows Subsystem for Linux MySQL and Postgres
 
 ## Prerequisites
 
@@ -39,3 +39,29 @@
 5. Now Click the **Get** button. It will download and install WSL.
 
 ![Microsoft Store](../fig/MicrosoftStore3.png)
+
+6. After installation completes Ubuntu will be available in start menu. When run for the first time it will ask for root user name and password. Type a user name and password and remember them.
+
+7. It is better to run `sudo apt update` and `sudo apt upgrade -y` after the installation. In these commands **apt** (Advanced Package Tool) is the ubuntu package manager. We use it to install or uninstall programs. sudo (super user do) is written before commands which require administrative (root) privileges.
+
+8. To install mysql in ubuntu `sudo apt install mysql-server`.
+
+9. To start mysql service `sudo systemctl start mysql.service`
+
+10. Secure mysql installation `sudo mysql_secure_installation`
+
+11. To login mysql `sudo mysql -u root -p`, type mysql password when prompted for fresh installation there is no password, just hitting enter will work.
+
+12. to quit mysql `exit`.
+
+13. To install PostgreSQL `sudo apt install postgresql postgresql-contrib`
+
+14. start postgresql service `sudo service postgresql start`
+
+15. switch to the postgres user `sudo -i -u postgres`
+
+16. type `psql` at prompt and hit enter.
+
+17. to quit postgres type `\q`
+
+
