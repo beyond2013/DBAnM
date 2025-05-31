@@ -19,6 +19,7 @@
   - Object-Oriented Databases 
   - [Lab 1: installation of WSL in windows and setting up mysql and postgreSQL](/markdown/lab0.md)
   - [Lab 2: Data Models mysql JSON vs PostgreSQL UDTs](/markdown/lab1.md)
+  - [Lab 3: Object Relational Data Modeling](./markdown/lab2.md)
 - [File Organization Concepts](markdown/fileorganization.md)
   - Heap, Sorted, and Hashed files
   - Indexing (B+ Trees, Hash Indexes)
